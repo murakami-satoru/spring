@@ -1,0 +1,11 @@
+■EC2ログイン
+ssh -i demo.pem ec2-user@ec2-3-133-83-190.us-east-2.compute.amazonaws.com
+■ファイル転送
+sftp -i demo.pem ec2-user@ec2-3-133-83-190.us-east-2.compute.amazonaws.com
+ 
+■ソース配置
+sudo mv vaddyTest.war /usr/share/tomcat/webapps/
+
+■Tocat状態確認
+sudo /bin/systemctl status tomcat
+※sudo /bin/systemctl status|stop|start xxx
