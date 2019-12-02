@@ -1,14 +1,20 @@
 package bbs.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpSession;
+
 import bbs.form.CommentForm;
+import bbs.form.PostForm;
 import bbs.form.SearchPostsForm;
+import bbs.entity.Users;
 import bbs.service.PostsService;
 
 @Controller
@@ -22,6 +28,12 @@ public class HomeController {
 		model.addAttribute("posts", postsService.getAll());
 		commonHome(model);
 		return "home";
+    }
+
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+        session.invalidate();
+		return "redirect:/login";
     }
 
     @RequestMapping(value = "/getAllPost", method = RequestMethod.GET)
@@ -40,8 +52,22 @@ public class HomeController {
 		model.addAttribute("addComment",new CommentForm());
 		model.addAttribute("searchPosts",new SearchPostsForm());
     	model.addAttribute("categories",postsService.getCategories());
-		model.addAttribute("title", "ホーム画面");
-
 		return model;
+    }
+
+
+    @RequestMapping(value = "/deletePost", method = RequestMethod.POST)
+    public String deletePost(HttpSession session, PostForm form) {
+    	Users loginUser = (Users) session.getAttribute("loginUser");
+    	postsService.deletePost(loginUser, form);
+        return "redirect:/home";
+    }
+
+    @RequestMapping(value = "/editPost", method = RequestMethod.POST)
+    public String getPost(Model model, PostForm form) {
+    	model.addAttribute("post",postsService.getPost(form));
+    	model.addAttribute("categories",postsService.getCategories());
+    	model.addAttribute("action_post","doeditPost");
+        return "addPost";
     }
 }

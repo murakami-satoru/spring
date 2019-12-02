@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -8,7 +8,7 @@
 <head>
 <script type="text/javascript" src="<c:url value="/resources/js/jkl-calendar.js"/>" charset="Shift_JIS"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<link rel="stylesheet" type="text/css" href="resources\css\style.css">
 <script>
 	function getSelect(text) {
 		document.getElementById('category').value = text;
@@ -47,13 +47,11 @@
     }
 
 </script>
-<%@ include file="/resources/css/css.jsp" %>
 <title>掲示板システム</title>
 </head>
 <body id="home">
 	<div id="wrapper">
 		<div id="header">
-			<h2>${ title }</h2>
 			<h2 id="loginInfo"><label>ログインユーザー：</label><c:out value="${ sessionScope.loginUser.name }"/></h2>
 			<div id="menu">
 				<ul>
@@ -172,8 +170,8 @@
 -->
 		<div id="posts">
 			<c:forEach items="${ posts }" var="post" varStatus="status">
-				<div id="post">
-					<div id="postTitle"><c:out value="${ post.title }"/></div>
+				<div id="post"  class="kokuban-t2">
+					<span id="postTitle" class="title-t2"><c:out value="${ post.title }"/></span>
 					<div align="right" id="postCategory">カテゴリー：<c:out value="${ post.category }"/></div>
 					<div id="postText"><c:out escapeXml="fales" value="${ post.text }"/> </div>
 					<div id="postDate"><c:out value="${ post.createdDateString }"/></div>
@@ -188,14 +186,8 @@
 							</div>
 						<div class="deleteButton">
 							<form action="deleteComment" method="post">
-								<input type="hidden" name="comment_id" value="<c:out value="${ comment.id }"/>">
-								<input type="submit" value="このコメントを削除"
-								<c:choose>
-									<c:when test="${ (loginUser.branchId == 1 && loginUser.departmentId == 2)
-									|| (loginUser.branchId == comment.branchId && loginUser.departmentId <= comment.departmentId) }"></c:when>
-									<c:otherwise>disabled</c:otherwise>
-								</c:choose>
-								>
+								<input type="hidden" name="id" value="<c:out value="${ comment.id }"/>">
+								<input type="submit" value="このコメントを削除">
 							</form>
 						</div>
 						</c:forEach>
@@ -213,15 +205,15 @@
 						</div>
 					</div>
 					<div class="deleteButton">
+						<form action="editPost" method="post">
+							<input type="hidden" name="id" value="<c:out value="${ post.id }"/>">
+							<input type="submit" value="この投稿を編集">
+						</form>
+					</div>
+					<div class="deleteButton">
 						<form action="deletePost" method="post">
-							<input type="hidden" name="post_id" value="<c:out value="${ post.id }"/>">
-							<input type="submit" value="この投稿を削除"
-							<c:choose>
-								<c:when test="${ (loginUser.branchId == 1 && loginUser.departmentId == 2)
-								|| (loginUser.branchId == post.branchId && loginUser.departmentId <= post.departmentId) }"></c:when>
-								<c:otherwise>disabled</c:otherwise>
-							</c:choose>
-							>
+							<input type="hidden" name="id" value="<c:out value="${ post.id }"/>">
+							<input type="submit" value="この投稿を削除">
 						</form>
 					</div>
 				</div>

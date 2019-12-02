@@ -23,4 +23,11 @@ public class CommentController {
     	commentsService.addComment(loginUser, form);
         return "redirect:/home";
     }
+
+    @RequestMapping(value = "/deleteComment", method = RequestMethod.POST)
+    public String deleteComment(@ModelAttribute CommentForm form,HttpSession session) {
+    	Users loginUser = (Users)session.getAttribute("loginUser");
+    	commentsService.deleteComment(loginUser, form);
+        return "redirect:/home";
+    }
 }

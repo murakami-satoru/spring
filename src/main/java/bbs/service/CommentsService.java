@@ -22,4 +22,10 @@ public class CommentsService {
     	commentsMapper.addComment(comments);
     }
 
+    public void deleteComment(Users loginUser,CommentForm form) {
+    	CommentsDto comments = new CommentsDto();
+    	BeanUtils.copyProperties(form, comments);
+    	comments.setUserId(loginUser.getId());
+    	commentsMapper.deleteComment(comments);
+    }
 }

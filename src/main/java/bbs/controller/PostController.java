@@ -29,7 +29,14 @@ public class PostController {
     @RequestMapping(value = "/newPost", method = RequestMethod.GET)
     public String newPost(Model model) {
     	model.addAttribute("post",new PostsDto());
-    	model.addAttribute("categories",postsService.getCategories());
+        model.addAttribute("categories",postsService.getCategories());
+    	model.addAttribute("do_edit","editPost");
         return "addPost";
+    }
+
+    @RequestMapping(value = "/doeditPost", method = RequestMethod.POST)
+    public String editPost(Model model, PostForm form) {
+    	postsService.editPost(form);
+        return "redirect:/home";
     }
 }

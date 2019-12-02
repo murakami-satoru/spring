@@ -25,6 +25,16 @@
 			<result column="comment_updated_date" property="updatedDate" />
         </collection>
     </resultMap>
+    <resultMap id="postResult" type="bbs.dto.PostsDto">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="text" property="text" />
+        <result column="category" property="category" />
+        <result column="branch_id" property="branchId" />
+        <result column="department_id" property="departmentId" />
+        <result column="user_id" property="userId" />
+        <result column="user_name" property="userName" />
+    </resultMap>
     <select id="getAll" resultMap="postsResult">
 		select
 		 p.id
@@ -47,7 +57,7 @@
 		,c.created_date as comment_created_date
 		,c.updated_date as comment_updated_date
 		from view_posts p left join view_comments c on p.id = c.post_id
-		order by id desc ,comment_id asc
+		order by id desc ,comment_id asc;
     </select>
 	<select id="getPostsByCategory" resultMap="postsResult" parameterType="String">
 		select
@@ -72,7 +82,7 @@
 		,c.updated_date as comment_updated_date
 		from view_posts p left join view_comments c on p.id = c.post_id
 		where p.category = #{category}
-		order by id desc ,comment_id asc
+		order by id desc ,comment_id asc;
     </select>
 	<select id="getPostsByToDate" resultMap="postsResult" parameterType="String">
 	<![CDATA[
@@ -98,7 +108,7 @@
 		,c.updated_date as comment_updated_date
 		from view_posts p left join view_comments c on p.id = c.post_id
 		where p.updated_date <= #{toDate}
-		order by id desc ,comment_id asc
+		order by id desc ,comment_id asc;
 	 ]]>
     </select>
 	<select id="getPostsByFromDate" resultMap="postsResult" parameterType="String">
@@ -125,7 +135,7 @@
 		,c.updated_date as comment_updated_date
 		from view_posts p left join view_comments c on p.id = c.post_id
 		where p.updated_date >= #{fromDate}
-		order by id desc ,comment_id asc
+		order by id desc ,comment_id asc;
 	 ]]>
     </select>
 	<select id="getPostsByBetweenDate" resultMap="postsResult" parameterType="String">
@@ -152,24 +162,24 @@
 		,c.updated_date as comment_updated_date
 		from view_posts p left join view_comments c on p.id = c.post_id
 		where p.updated_date between #{toDate} and #{fromDate}
-		order by id desc ,comment_id asc
+		order by id desc ,comment_id asc;
 	 ]]>
     </select>
     <resultMap id="categoriesResults" type="String">
         <result column="category" property="categories" />
     </resultMap>
     <select id="getCategories" resultMap="categoriesResults">
-		select distinct category from posts order by id
+		SELECT DISTINCT category FROM posts ORDER BY id
     </select>
 	<insert id="addPost" parameterType="bbs.dto.PostsDto">
-		insert into posts(
+		INSERT INTO posts(
 		 title
 		,text
 		,category
 		,user_id
 		,created_date
 		,updated_date
-		) values (
+		) VALUES (
 		 #{title}
 		,#{text}
 		,#{category}
@@ -178,5 +188,28 @@
 		,CURRENT_TIMESTAMP
 		)
 	</insert>
+	<delete id="deletePost" parameterType="bbs.dto.PostsDto">
+		DELETE FROM posts
+		WHERE id = #{id}
+		AND user_id = #{userId}
+	</delete>
+	<update id="editPost" parameterType="bbs.dto.PostsDto">
+		UPDATE posts 
+		SET 
+		 title = #{title}
+		 ,text = #{text}
+		 ,category = #{category}
+		 ,updated_date = CURRENT_TIMESTAMP
+		WHERE id = #{id}
+	</update>
+	<select id="getPost" parameterType="bbs.dto.PostsDto" resultMap="postResult">
+		SELECT
+		  id
+		 ,title
+		 ,text
+		 ,category
+		FROM posts
+		WHERE id = #{id}
+	</select>
 </mapper>
 
