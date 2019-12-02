@@ -25,7 +25,7 @@
     <!-- DataSource -->
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://root.cqrfcpblunqq.us-east-2.rds.amazonaws.com:3306/bbs" />
+        <property name="url" value="jdbc:mysql://root.cqrfcpblunqq.us-east-2.rds.amazonaws.com:3306/bbs?characterEncoding=UTF-8" />
         <property name="username" value="root" />
         <property name="password" value="rootroot" />
     </bean>

@@ -55,7 +55,6 @@ public class PostsService {
     public void deletePost(Users loginUser,PostForm form) {
     	PostsDto post = new PostsDto();
     	BeanUtils.copyProperties(form, post);
-    	post.setUserId(loginUser.getId());
     	postsMapper.deletePost(post);
     }
 

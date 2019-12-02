@@ -193,7 +193,7 @@
 						</c:forEach>
 						<div id="commentForm">
 							<form:form modelAttribute="addComment" action="${pageContext.request.contextPath}/addComment">
-								<form:textarea path="text" cols="80" rows="10"/>
+								<form:textarea path="text" cols="50" rows="10"/>
 								<form:hidden path="postId" value="${ post.id }"/>
 								<input type="submit" value="コメントする">
 							</form:form>

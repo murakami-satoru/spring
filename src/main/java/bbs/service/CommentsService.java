@@ -18,7 +18,7 @@ public class CommentsService {
     public void addComment(Users loginUser,CommentForm form) {
     	CommentsDto comments = new CommentsDto();
     	BeanUtils.copyProperties(form, comments);
-    	comments.setUserId(loginUser.getId());
+		comments.setUserId(loginUser.getId());
     	commentsMapper.addComment(comments);
     }
 

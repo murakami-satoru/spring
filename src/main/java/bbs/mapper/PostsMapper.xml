@@ -191,7 +191,6 @@
 	<delete id="deletePost" parameterType="bbs.dto.PostsDto">
 		DELETE FROM posts
 		WHERE id = #{id}
-		AND user_id = #{userId}
 	</delete>
 	<update id="editPost" parameterType="bbs.dto.PostsDto">
 		UPDATE posts 
