@@ -1,17 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="resources\css\style.css">
 <script>
     function getSelect(text) {
     	document.getElementById('selectedCategory').value = text;
     }
 </script>
-<%@ include file="/resources/css/css.jsp" %>
 <title>掲示板システム</title>
 </head>
 <body id="home">
@@ -33,8 +33,8 @@
 				</c:if>
 			</div>
 		</div>
-		<div id="form">
-			<form:form modelAttribute="post" action="${pageContext.request.contextPath}/addPost">
+		<div id="form" class="kokuban-t2">
+				<form:form modelAttribute="post" action="${pageContext.request.contextPath}/${action_post}">
 				<div>
 					<label>件名:</label>
 					<form:input path="title" size="40" maxlength="50"/>
@@ -61,6 +61,7 @@
 					<form:select path="categories" items="${categories}" onChange="getSelect(this.value)" size="3" />
 				</div>
 				<div><input id="button" type="submit" value="登録"></div>
+				<form:hidden path="id"/>
 			</form:form>
 		</div>
 	</div>

@@ -7,6 +7,6 @@
         <result column="name" property="name" />
     </resultMap>
     <select id="getAll" resultMap="branchesResult">
-		select * from branches
+		SELECT * FROM branches;
     </select>
 </mapper>

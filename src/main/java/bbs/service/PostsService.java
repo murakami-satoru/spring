@@ -46,10 +46,28 @@ public class PostsService {
     }
 
     public void addComment(Users loginUser,PostForm form) {
-    	System.out.println(form.getCategory());
     	PostsDto post = new PostsDto();
     	BeanUtils.copyProperties(form, post);
     	post.setUserId(loginUser.getId());
     	postsMapper.addPost(post);
+    }
+
+    public void deletePost(Users loginUser,PostForm form) {
+    	PostsDto post = new PostsDto();
+    	BeanUtils.copyProperties(form, post);
+    	post.setUserId(loginUser.getId());
+    	postsMapper.deletePost(post);
+    }
+
+    public void editPost(PostForm form) {
+    	PostsDto post = new PostsDto();
+    	BeanUtils.copyProperties(form, post);
+    	postsMapper.editPost(post);
+    }
+
+    public PostsDto getPost(PostForm form) {
+    	PostsDto post = new PostsDto();
+    	BeanUtils.copyProperties(form, post);
+    	return postsMapper.getPost(post);
     }
 }

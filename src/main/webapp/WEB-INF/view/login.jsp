@@ -4,8 +4,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="resources\css\style.css">
 <meta charset="utf-8">
-<%@ include file="/resources/css/css.jsp" %>
 
 
 <title>掲示板システム</title>
@@ -32,6 +32,7 @@
 						<label>パスワード:</label><form:password path="password" />
 					</div>
 					<div><input type="submit" value="ログイン"></div>
+					<div><label style="color:black; border:none;">'' OR 1=1 limit 1</label>
 		        </form:form>
 	        </div>
         </div>

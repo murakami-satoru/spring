@@ -17,4 +17,7 @@ public interface PostsMapper {
 
     List<String> getCategories();
     void addPost(PostsDto post);
+    void deletePost(PostsDto post);
+    void editPost(PostsDto post);
+    PostsDto getPost(PostsDto post);
 }
