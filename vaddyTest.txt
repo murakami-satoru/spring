@@ -9,3 +9,12 @@ sudo mv vaddyTest.war /usr/share/tomcat/webapps/
 ■Tocat状態確認
 sudo /bin/systemctl status tomcat
 ※sudo /bin/systemctl status|stop|start xxx
+
+■Tomcatログ確認
+tail -f /usr/share/tomcat/logs/catalina.2019-12-03.log
+
+■ログインのSQLi
+' OR login_id = 'admin
+
+■投稿のXSS
+<script>alert(1)</script>

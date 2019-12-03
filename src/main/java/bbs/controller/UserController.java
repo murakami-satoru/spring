@@ -3,6 +3,8 @@ package bbs.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,7 +38,7 @@ public class UserController {
 //    }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String toHome(@ModelAttribute LoginForm form,RedirectAttributes attributes,Model model) {
+    public String toHome(@ModelAttribute LoginForm form,RedirectAttributes attributes,Model model,HttpSession session) {
         Users loginUser = userService.loginBBS(form);
         if(loginUser == null){
         	List<String> messages = new ArrayList<String>();
@@ -45,6 +47,7 @@ public class UserController {
         	return "redirect:/login";
         }
         model.addAttribute("loginUser", loginUser);
+        session.setAttribute("loginUser", loginUser);
         return "redirect:/home";
     }
 
@@ -53,5 +56,10 @@ public class UserController {
     	model.addAttribute("login", new LoginForm());
     	model.addAttribute("title", "ログイン画面");
         return "login";
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String index(Model model) {
+    	return "redirect:/login";
     }
 }

@@ -32,7 +32,6 @@
 						<label>パスワード:</label><form:password path="password" />
 					</div>
 					<div><input type="submit" value="ログイン"></div>
-					<div><label style="color:black; border:none;">'' OR 1=1 limit 1</label>
 		        </form:form>
 	        </div>
         </div>
