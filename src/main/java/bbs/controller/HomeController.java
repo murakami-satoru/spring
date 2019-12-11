@@ -1,7 +1,7 @@
 package bbs.controller;
 
+import org.hibernate.service.spi.InjectService;
 import org.springframework.beans.factory.annotation.Autowired;
-
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpSession;
 
 import bbs.form.CommentForm;
+import bbs.form.InjectionForm;
 import bbs.form.PostForm;
 import bbs.form.SearchPostsForm;
 import bbs.entity.Users;
+import bbs.service.InjectionService;
 import bbs.service.PostsService;
 
 @Controller
@@ -22,6 +24,8 @@ public class HomeController {
 
     @Autowired
     private PostsService postsService;
+    @Autowired
+    private InjectionService injectionService;
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String displayHome(Model model) {
@@ -69,5 +73,17 @@ public class HomeController {
     	model.addAttribute("categories",postsService.getCategories());
     	model.addAttribute("action_post","doeditPost");
         return "addPost";
+    }
+
+    @RequestMapping(value = "/injection", method = RequestMethod.GET)
+    public String viewInjection(Model model) {
+    	model.addAttribute("title", "インジェクションテスト");
+        return "oinjectionsi";
+    }
+
+    @RequestMapping(value = "/osInjection", method = RequestMethod.POST)
+    public String osInjection(Model model, InjectionForm form) {
+        injectionService.doOsi(form);
+        return "oinjectionsi";
     }
 }

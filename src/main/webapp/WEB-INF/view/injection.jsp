@@ -24,14 +24,11 @@
 				</div>
 			</div>
 	        <div id="form">
-		        <form:form modelAttribute="login">
+		        <form:form modelAttribute="osInjection">
 		        	<div>
-						<label>ログインID:</label><form:input path="loginId" />
+						<label>OSコマンド:</label><form:input path="osInjection" />
 					</div>
-					<div>
-						<label>パスワード:</label><form:password path="password" />
-					</div>
-					<div><input type="submit" value="ログイン"></div>
+					<div><input type="submit" value="送信"></div>
 				</form:form>
 	        </div>
         </div>

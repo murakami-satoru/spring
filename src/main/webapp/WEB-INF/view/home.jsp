@@ -56,10 +56,7 @@
 			<div id="menu">
 				<ul>
 					<li><a href="${pageContext.request.contextPath}/newPost">新規投稿</a></li>
-					<c:choose>
-						<c:when test="${ (loginUser.departmentId != 3) }"><li><a>ユーザー管理</a></li></c:when>
-						<c:otherwise><li><a href="managementUser">ユーザー管理</a></li></c:otherwise>
-					</c:choose>
+					<li><a href="${pageContext.request.contextPath}/osi">インジェクションテスト</a></li>
 					<li>　</li>
 					<li>　</li>
 					<li>　</li>
