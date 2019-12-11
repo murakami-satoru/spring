@@ -56,7 +56,7 @@
 			<div id="menu">
 				<ul>
 					<li><a href="${pageContext.request.contextPath}/newPost">新規投稿</a></li>
-					<li><a href="${pageContext.request.contextPath}/osi">インジェクションテスト</a></li>
+					<li><a href="${pageContext.request.contextPath}/injection">インジェクションテスト</a></li>
 					<li>　</li>
 					<li>　</li>
 					<li>　</li>
