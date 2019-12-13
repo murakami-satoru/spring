@@ -2,21 +2,28 @@ package bbs.service;
 
 import java.io.IOException;
 
+import org.apache.ibatis.ognl.Ognl;
+import org.apache.ibatis.ognl.OgnlContext;
+import org.apache.ibatis.ognl.OgnlException;
 import org.springframework.stereotype.Service;
 
 import bbs.form.InjectionForm;
 
 @Service
 public class InjectionService {
-    public void doOsi(InjectionForm form) {
+    public String doOsi(InjectionForm form) {
         String osi = form.getOsInjection();
-        String[] Command = { "cmd", "/c", "notepad.exe"}; // 起動コマンドを指定する
-        Runtime runtime = Runtime.getRuntime(); // ランタイムオブジェクトを取得する
+        OgnlContext ctx = new OgnlContext();
+        String result = "";
         try {
-            runtime.exec(Command); // 指定したコマンドを実行する
-        } catch (IOException e) {
-            e.printStackTrace();
+            Object expr = Ognl.parseExpression(osi.replaceAll("Math\\.", "@Math@"));
+            result = String.valueOf(Ognl.getValue(expr, ctx));
+        } catch (OgnlException e) {
+            if (e.getReason() != null) {
+                result = e.getReason().getMessage();
+            }
         }
+        return result;
     }
 
 }

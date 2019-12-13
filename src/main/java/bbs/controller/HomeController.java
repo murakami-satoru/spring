@@ -76,14 +76,17 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/injection", method = RequestMethod.GET)
-    public String viewInjection(Model model) {
-    	model.addAttribute("title", "インジェクションテスト");
-        return "oinjectionsi";
+    public String viewInjection(Model model, InjectionForm form) {
+        model.addAttribute("title", "インジェクションテスト");
+        model.addAttribute("injection", form);
+        return "injection";
     }
 
     @RequestMapping(value = "/osInjection", method = RequestMethod.POST)
     public String osInjection(Model model, InjectionForm form) {
-        injectionService.doOsi(form);
-        return "oinjectionsi";
+        model.addAttribute("title", "インジェクションテスト");
+        form.setResult(injectionService.doOsi(form));
+        model.addAttribute("injection", form);
+        return "injection";
     }
 }

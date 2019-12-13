@@ -24,13 +24,14 @@
 				</div>
 			</div>
 	        <div id="form">
-		        <form:form modelAttribute="osInjection">
-		        	<div>
-						<label>OSコマンド:</label><form:input path="osInjection" />
-					</div>
-					<div><input type="submit" value="送信"></div>
-				</form:form>
-	        </div>
+				<form action="osInjection" method="post">
+					<textarea  name="osInjection" placeholder="Math.sqrt(5)などを入力" ></textarea>
+					<input type="submit" value="OSコマンドを送信">
+				</form>
+			</div>
+			<div>
+				<label><c:out value="${ injection.result }"/></label>
+			</div>
         </div>
     </body>
 </html>
