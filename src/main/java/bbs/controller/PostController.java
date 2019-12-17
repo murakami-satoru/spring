@@ -31,6 +31,14 @@ public class PostController {
     	model.addAttribute("post",new PostsDto());
         model.addAttribute("categories",postsService.getCategories());
     	model.addAttribute("do_edit","editPost");
+        return "confirmPost";
+    }
+
+    @RequestMapping(value = "/confirmPost", method = RequestMethod.GET)
+    public String confirmPost(Model model) {
+    	model.addAttribute("post",new PostsDto());
+        model.addAttribute("categories",postsService.getCategories());
+    	model.addAttribute("do_edit","editPost");
         return "addPost";
     }
 

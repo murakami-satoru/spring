@@ -16,7 +16,7 @@ public class InjectionService {
         OgnlContext ctx = new OgnlContext();
         String result = "";
         try {
-            Object expr = Ognl.parseExpression(osi.replaceAll("Math\\.", "@Math@"));
+            Object expr = Ognl.parseExpression(osi);
             result = String.valueOf(Ognl.getValue(expr, ctx));
         } catch (OgnlException e) {
             if (e.getReason() != null) {

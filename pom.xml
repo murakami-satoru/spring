@@ -165,4 +165,16 @@
 			<version>1.16.8</version>
 		</dependency>
 	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<warName>vaddyTest</warName>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
