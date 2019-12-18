@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
+
 <link rel="stylesheet" type="text/css" href="resources\css\style.css">
 <meta charset="utf-8">
 
@@ -14,6 +15,12 @@
 		<div id="wrapper">
 			<div id="header">
 				<h2>${ title }</h2>
+				<div id="menu">
+					<ul>
+						<li><a href="${pageContext.request.contextPath}/home">ホーム</a></li>
+						<li><a href="logout">ログアウト</a></li>
+					</ul>
+				</div>
 				<div class="error">
 					<c:if test="${ not empty errorMessages }">
 						<c:forEach items="${ errorMessages }" var="message">
@@ -23,14 +30,15 @@
 					</c:if>
 				</div>
 			</div>
+			<span id="postTitle" class="title-t2">OSコマンドインジェクション</span>
 	        <div id="form">
 				<form action="osInjection" method="post">
-					<textarea  name="osInjection" placeholder="Math.sqrt(5)などを入力" ></textarea>
+					<textarea rows="5" cols="80" name="osInjection" placeholder="Math.sqrt(5)などを入力" ></textarea>
 					<input type="submit" value="OSコマンドを送信">
 				</form>
 			</div>
 			<div>
-				<label><c:out value="${ injection.result }"/></label>
+				<textarea rows="5" cols="80" disabled><c:out value="${ injection.result }"/></textarea>
 			</div>
         </div>
     </body>

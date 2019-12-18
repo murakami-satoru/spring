@@ -45,7 +45,7 @@ public class PostsService {
     	return postsMapper.getCategories();
     }
 
-    public void addComment(Users loginUser,PostForm form) {
+    public void addPost(Users loginUser,PostForm form) {
     	PostsDto post = new PostsDto();
     	BeanUtils.copyProperties(form, post);
     	post.setUserId(loginUser.getId());

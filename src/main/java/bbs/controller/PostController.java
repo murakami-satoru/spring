@@ -22,7 +22,7 @@ public class PostController {
     @RequestMapping(value = "/addPost", method = RequestMethod.POST)
     public String addPost(@ModelAttribute PostForm form,HttpSession session) {
     	Users loginUser = (Users) session.getAttribute("loginUser");
-    	postsService.addComment(loginUser, form);
+    	postsService.addPost(loginUser, form);
         return "redirect:/home";
     }
 
@@ -30,16 +30,16 @@ public class PostController {
     public String newPost(Model model) {
     	model.addAttribute("post",new PostsDto());
         model.addAttribute("categories",postsService.getCategories());
-    	model.addAttribute("do_edit","editPost");
-        return "confirmPost";
+    	model.addAttribute("action_post","confirmPost");
+        return "addPost";
     }
 
-    @RequestMapping(value = "/confirmPost", method = RequestMethod.GET)
+    @RequestMapping(value = "/confirmPost", method = RequestMethod.POST)
     public String confirmPost(Model model) {
     	model.addAttribute("post",new PostsDto());
         model.addAttribute("categories",postsService.getCategories());
-    	model.addAttribute("do_edit","editPost");
-        return "addPost";
+    	model.addAttribute("action_post","addPost");
+        return "confirmPost";
     }
 
     @RequestMapping(value = "/doeditPost", method = RequestMethod.POST)

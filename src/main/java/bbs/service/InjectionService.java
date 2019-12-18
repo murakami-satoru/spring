@@ -2,9 +2,6 @@ package bbs.service;
 
 import java.io.IOException;
 
-import org.apache.ibatis.ognl.Ognl;
-import org.apache.ibatis.ognl.OgnlContext;
-import org.apache.ibatis.ognl.OgnlException;
 import org.springframework.stereotype.Service;
 
 import bbs.form.InjectionForm;
@@ -13,14 +10,19 @@ import bbs.form.InjectionForm;
 public class InjectionService {
     public String doOsi(InjectionForm form) {
         String osi = form.getOsInjection();
-        OgnlContext ctx = new OgnlContext();
+        Runtime r = Runtime.getRuntime();
         String result = "";
         try {
-            Object expr = Ognl.parseExpression(osi);
-            result = String.valueOf(Ognl.getValue(expr, ctx));
-        } catch (OgnlException e) {
-            if (e.getReason() != null) {
-                result = e.getReason().getMessage();
+            Process p = r.exec(osi);
+            p.waitFor();
+            result = "実行したコマンド：" + osi;
+        } catch (IOException  e) {
+            if (e.getMessage() != null) {
+                result = e.getMessage();
+            }
+        } catch (InterruptedException  e) {
+            if (e.getMessage() != null) {
+                result = e.getMessage();
             }
         }
         return result;
