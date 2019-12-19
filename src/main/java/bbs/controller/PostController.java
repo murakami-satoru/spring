@@ -3,6 +3,7 @@ package bbs.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -35,8 +36,10 @@ public class PostController {
     }
 
     @RequestMapping(value = "/confirmPost", method = RequestMethod.POST)
-    public String confirmPost(Model model) {
-    	model.addAttribute("post",new PostsDto());
+    public String confirmPost(@ModelAttribute PostForm form, Model model) {
+        PostsDto post = new PostsDto();
+    	BeanUtils.copyProperties(form, post);
+    	model.addAttribute("post",post);
         model.addAttribute("categories",postsService.getCategories());
     	model.addAttribute("action_post","addPost");
         return "confirmPost";

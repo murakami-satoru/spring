@@ -17,7 +17,7 @@
 <body id="home">
 	<div id="wrapper">
 		<div id="header">
-			<h1>新規投稿</h1>
+			<h1>投稿確認</h1>
 			<h2 id="loginInfo"><label>ログインユーザー：</label><c:out value="${ sessionScope.loginUser.name }"/></h2>
 			<div id="menu">
 				<ul>
@@ -37,28 +37,24 @@
 				<form:form modelAttribute="post" action="${pageContext.request.contextPath}/${action_post}">
 				<div>
 					<label>件名:</label>
-					<form:input path="title" size="40" maxlength="50" disabled />
+					<form:input path="title" size="40" maxlength="50" readOnly="true" value="${post.title}" />
 					<c:forEach items="${ violationMessages['_title'] }" var="message">
 						<div class="error"><c:out value="${ message }"/></div>
 					</c:forEach>
 				</div>
 				<div>
 					<label>投稿内容:</label>
-					<form:textarea path="text" cols="50" rows="10" disabled/>
+					<form:textarea path="text" cols="50" rows="10" readOnly="true" value="${post.text}" />
 					<c:forEach items="${ violationMessages['_text'] }" var="message">
 						<div class="error"><c:out value="${ message }"/></div>
 					</c:forEach>
 				</div>
 				<div>
 					<label>カテゴリー:</label>
-					<form:input path="category" id="selectedCategory" size="12" maxlength="10" disabled/>
+					<form:input path="category" id="selectedCategory" size="12" maxlength="10" readOnly="true" value="${post.category}" />
 					<c:forEach items="${ violationMessages['_category'] }" var="message">
 						<div class="error"><c:out value="${ message }"/></div>
 					</c:forEach>
-				</div>
-				<div>
-					<label>カテゴリー一覧:</label>
-					<form:select path="categories" items="${categories}" onChange="getSelect(this.value)" size="3" disabled/>
 				</div>
 				<div><input id="button" type="submit" value="登録"></div>
 				<form:hidden path="id"/>
