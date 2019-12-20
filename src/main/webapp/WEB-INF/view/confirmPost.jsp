@@ -37,27 +37,30 @@
 				<form:form modelAttribute="post" action="${pageContext.request.contextPath}/${action_post}">
 				<div>
 					<label>件名:</label>
-					<form:input path="title" size="40" maxlength="50" readOnly="true" value="${post.title}" />
+					<input type="text" id="title" size="40" maxlength="50" readOnly="true" value="${post.title}" />
 					<c:forEach items="${ violationMessages['_title'] }" var="message">
 						<div class="error"><c:out value="${ message }"/></div>
 					</c:forEach>
 				</div>
 				<div>
 					<label>投稿内容:</label>
-					<form:textarea path="text" cols="50" rows="10" readOnly="true" value="${post.text}" />
+					<textarea id="text" cols="50" rows="10" readOnly="true" >${post.text}</textarea>
 					<c:forEach items="${ violationMessages['_text'] }" var="message">
 						<div class="error"><c:out value="${ message }"/></div>
 					</c:forEach>
 				</div>
 				<div>
 					<label>カテゴリー:</label>
-					<form:input path="category" id="selectedCategory" size="12" maxlength="10" readOnly="true" value="${post.category}" />
+					<input id="selectedCategory" size="12" maxlength="10" readOnly="true" value="${post.category}" />
 					<c:forEach items="${ violationMessages['_category'] }" var="message">
 						<div class="error"><c:out value="${ message }"/></div>
 					</c:forEach>
 				</div>
 				<div><input id="button" type="submit" value="登録"></div>
 				<form:hidden path="id"/>
+				<form:hidden path="text" value="${post.text}"/>
+				<form:hidden path="title" value="${post.title}"/>
+				<form:hidden path="category" value="${post.category}"/>
 			</form:form>
 		</div>
 	</div>

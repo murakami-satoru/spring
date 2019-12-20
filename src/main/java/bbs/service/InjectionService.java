@@ -1,6 +1,9 @@
 package bbs.service;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
 
@@ -13,9 +16,15 @@ public class InjectionService {
         Runtime r = Runtime.getRuntime();
         String result = "";
         try {
-            Process p = r.exec(osi);
+            String[] cmd = {"/bin/sh", "-c", osi};
+            Process p = r.exec(cmd);
             p.waitFor();
-            result = "実行したコマンド：" + osi;
+            BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            ArrayList list = new ArrayList();
+            for(String line = br.readLine(); line != null; line = br.readLine()) {
+                list.add(line);
+              }
+            result = "実行したコマンド：" + osi + "\r\n実行結果：" + list.toString();
         } catch (IOException  e) {
             if (e.getMessage() != null) {
                 result = e.getMessage();
