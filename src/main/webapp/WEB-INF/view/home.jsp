@@ -54,15 +54,15 @@
 		<div id="header">
 			<h2 id="loginInfo"><label>ログインユーザー：</label><c:out value="${ sessionScope.loginUser.name }"/></h2>
 			<div id="menu">
-				<ul>
-					<li><a href="${pageContext.request.contextPath}/newPost">新規投稿</a></li>
-					<li><a href="${pageContext.request.contextPath}/injection">インジェクションテスト</a></li>
-					<li>　</li>
-					<li>　</li>
-					<li>　</li>
-					<li>　</li>
-					<li><a href="logout">ログアウト</a></li>
-				</ul>
+				<div id="post">
+					<a href="${pageContext.request.contextPath}/newPost">新規投稿</a>
+				</div>
+				<div id="itest">
+					<a href="${pageContext.request.contextPath}/injection">インジェクションテスト</a>
+				</div>
+				<div id="logout">
+					<a href="logout">ログアウト</a>
+				</div>
 			</div>
 			<div class="error">
 				<c:if test="${ not empty errorMessages }">

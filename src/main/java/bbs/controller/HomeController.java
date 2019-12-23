@@ -11,11 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpSession;
 
 import bbs.form.CommentForm;
-import bbs.form.InjectionForm;
 import bbs.form.PostForm;
 import bbs.form.SearchPostsForm;
 import bbs.entity.Users;
-import bbs.service.InjectionService;
 import bbs.service.PostsService;
 
 @Controller
@@ -23,8 +21,6 @@ public class HomeController {
 
     @Autowired
     private PostsService postsService;
-    @Autowired
-    private InjectionService injectionService;
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String displayHome(Model model) {
@@ -72,20 +68,5 @@ public class HomeController {
     	model.addAttribute("categories",postsService.getCategories());
     	model.addAttribute("action_post","doeditPost");
         return "addPost";
-    }
-
-    @RequestMapping(value = "/injection", method = RequestMethod.GET)
-    public String viewInjection(Model model, InjectionForm form) {
-        model.addAttribute("title", "インジェクションテスト");
-        model.addAttribute("injection", form);
-        return "injection";
-    }
-
-    @RequestMapping(value = "/osInjection", method = RequestMethod.POST)
-    public String osInjection(Model model, InjectionForm form) {
-        model.addAttribute("title", "インジェクションテスト");
-        form.setResult(injectionService.doOsi(form));
-        model.addAttribute("injection", form);
-        return "injection";
     }
 }

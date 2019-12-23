@@ -14,12 +14,17 @@
 	<body id="home">
 		<div id="wrapper">
 			<div id="header">
-				<h2>${ title }</h2>
+				<h2 id="loginInfo"><label>ログインユーザー：</label><c:out value="${ sessionScope.loginUser.name }"/></h2>
 				<div id="menu">
-					<ul>
-						<li><a href="${pageContext.request.contextPath}/home">ホーム</a></li>
-						<li><a href="logout">ログアウト</a></li>
-					</ul>
+					<div id="home">
+						<a href="${pageContext.request.contextPath}/home">ホーム</a>
+					</div>
+					<div id="itest">
+						<a href="${pageContext.request.contextPath}/injection">インジェクションテスト</a>
+					</div>
+					<div id="logout">
+						<a href="logout">ログアウト</a>
+					</div>
 				</div>
 				<div class="error">
 					<c:if test="${ not empty errorMessages }">
@@ -35,6 +40,13 @@
 				<form action="osInjection" method="post">
 					<textarea rows="5" cols="80" name="osInjection" placeholder="Math.sqrt(5)などを入力" ></textarea>
 					<input type="submit" value="OSコマンドを送信">
+				</form>
+			</div>
+			<span id="postTitle" class="title-t2">パストラバーサル</span>
+	        <div id="form">
+				<form action="pathTraversal" method="post">
+					<input type="text" name="pathTraversal" value="../../resources/css/style.css" />
+					<input type="submit" value="CSS読み込み">
 				</form>
 			</div>
 			<div>

@@ -3,7 +3,11 @@ package bbs.service;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+
+import javax.persistence.criteria.Path;
 
 import org.springframework.stereotype.Service;
 
@@ -35,6 +39,12 @@ public class InjectionService {
             }
         }
         return result;
+    }
+    
+    public String doPathTraversal(InjectionForm form) {
+        String pt = form.getPathTraversal();
+        Path file = Paths.get("/usr/share/tomcat/webapps/"+pt);
+        return Files.readString(file);
     }
 
 }

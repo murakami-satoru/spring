@@ -17,12 +17,11 @@
 <body id="home">
 	<div id="wrapper">
 		<div id="header">
-			<h1>投稿確認</h1>
 			<h2 id="loginInfo"><label>ログインユーザー：</label><c:out value="${ sessionScope.loginUser.name }"/></h2>
 			<div id="menu">
-				<ul>
-					<li><a href="home">ホーム</a></li>
-				</ul>
+				<div id="post">
+					<a href="${pageContext.request.contextPath}/home">ホーム</a>
+				</div>
 			</div>
 			<div class="error">
 				<c:if test="${ not empty errorMessages }">
@@ -33,6 +32,7 @@
 				</c:if>
 			</div>
 		</div>
+		<span id="postTitle" class="title-t2">投稿確認</span>
 		<div id="form" class="kokuban-t2">
 				<form:form modelAttribute="post" action="${pageContext.request.contextPath}/${action_post}">
 				<div>
