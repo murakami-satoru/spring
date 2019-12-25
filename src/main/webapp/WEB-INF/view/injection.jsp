@@ -45,12 +45,12 @@
 			<span id="postTitle" class="title-t2">パストラバーサル</span>
 	        <div id="form">
 				<form action="pathTraversal" method="post">
-					<input type="text" name="pathTraversal" value="../../resources/css/style.css" />
+					<input type="hidden" name="pathTraversal" value="/var/lib/tomcat/webapps/vaddyTest/resources/css/style.css" />
 					<input type="submit" value="CSS読み込み">
 				</form>
 			</div>
-			<div>
-				<textarea rows="5" cols="80" disabled><c:out value="${ injection.result }"/></textarea>
+			<div class="kokuban-t2">
+				<c:out value="${ injection.result }"/>
 			</div>
         </div>
     </body>
