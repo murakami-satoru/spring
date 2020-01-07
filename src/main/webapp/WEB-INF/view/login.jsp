@@ -116,11 +116,11 @@
 						<div class="row form-group">
 							<div class="col-md-6">
 								<label for="fname">Login ID</label>
-								<form:input path="loginId" id="fname" class="form-control" />
+								<form:input path="loginId" class="form-control" />
 							</div>
 							<div class="col-md-6">
 								<label for="fname">password</label>
-								<form:password path="password" id="lname" class="form-control"/>
+								<form:password path="password" class="form-control"/>
 							</div>
 						</div>
 						<div class="form-group">

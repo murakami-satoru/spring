@@ -19,7 +19,7 @@ public class Posts {
 	private String userName;
 	private Date createdDate;
 	private Date updatedDate;
-	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年MM月dd日 E曜日 HH:mm:ss");
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("d/M/y E HH:mm:ss");
 	private List<Comments> comments;
 
 	public String getCreatedDateString(){

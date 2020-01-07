@@ -32,6 +32,7 @@ public class PostController {
     	model.addAttribute("post",new PostsDto());
         model.addAttribute("categories",postsService.getCategories());
     	model.addAttribute("action_post","confirmPost");
+    	model.addAttribute("is_readonly",false);
         return "addPost";
     }
 
@@ -42,7 +43,8 @@ public class PostController {
     	model.addAttribute("post",post);
         model.addAttribute("categories",postsService.getCategories());
     	model.addAttribute("action_post","addPost");
-        return "confirmPost";
+    	model.addAttribute("is_readonly",true);
+        return "addPost";
     }
 
     @RequestMapping(value = "/doeditPost", method = RequestMethod.POST)

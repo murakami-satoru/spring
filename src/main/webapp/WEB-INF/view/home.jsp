@@ -71,92 +71,111 @@
 	<div class="fh5co-loader"></div>
 	
 	<div id="page">
-	<nav class="fh5co-nav" role="navigation">
-		<div class="container">
-			<div class="row">
-				<div class="col-xs-2">
-					<div id="fh5co-logo"><a href="/home">HOME</a></div>
-				</div>
-				<div class="col-xs-10 text-right menu-1">
-					<ul>
-						<li class="active"><a href="/home">Home</a></li>
-						<li><a href="${pageContext.request.contextPath}/newPost">New Post</a></li>
-						<li><a href="${pageContext.request.contextPath}/injection">injection Test</a></li>
-					</ul>
+		<nav class="fh5co-nav" role="navigation">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-2">
+						<a><i class="icon-user"></i><c:out value="${ sessionScope.loginUser.name }"/></a>
+					</div>
+					<div class="col-xs-10 text-right menu-1">
+						<ul>
+							<li class="active"><a href="home">Home</a></li>
+							<li><a href="${pageContext.request.contextPath}/newPost">New Post</a></li>
+							<li><a href="${pageContext.request.contextPath}/injection">injection Test</a></li>
+							<li><a href="logout">Logout</a></li>
+						</ul>
+					</div>
 				</div>
 			</div>
-		</div>
-	</nav>
-	<header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image:url(resources/images/img_bg_2.jpg);">
-		<div class="overlay"></div>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-8 col-md-offset-2 text-center">
-					<div class="display-t">
-						<div class="display-tc animate-box" data-animate-effect="fadeIn">
-							<h1>Re:Cypher's Bad Site</h1>
+		</nav>
+		<header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image:url(resources/images/img_bg_2.jpg);">
+			<div class="overlay"></div>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2 text-center">
+						<div class="display-t">
+							<div class="display-tc animate-box" data-animate-effect="fadeIn">
+								<h1>Re:Cypher's Bad Site</h1>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</header>
-	<div class="fh5co-section">
-		<div class="container">
-			<c:forEach items="${ posts }" var="post" varStatus="status">
-			<div class="row">
-				<div class="col-md-4 col-sm-4 animate-box" data-animate-effect="fadeIn">
-					<div class="fh5co-staff">
-						<h3><c:out value="${ post.title }"/></h3>
-						<strong class="role">category:<c:out value="${ post.category }"/></strong>
-						<strong class="role">date:<c:out value="${ post.createdDateString }"/></strong>
-						<strong class="role">author:<c:out value="${ post.userName }"/></strong>
-						<p><c:out escapeXml="fales" value="${ post.text }"/></p>
-						<label>Comment</label>
-						<c:forEach items="${ post.comments }" var="comment">
-							<div id="comment">
-								<div id="commentText"><c:out escapeXml="fales" value="${ comment.text }"/></div>
-								<div id="commentDate"><c:out value="${ comment.createdDateString }"/></div>
-								<div id="commentName"><c:out value="${ comment.userName }"/></div>
+		</header>
+<c:forEach items="${ posts }" var="post" varStatus="status">
+		<div class="fh5co-section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 animate-box" data-animate-effect="fadeIn">
+						<div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
+							<div class="testimony">
+								<h3><c:out value="${ post.title }"/></h3>
+								<strong class="role">Category:<c:out value="${ post.category }"/></strong>
+								<br>
+								<strong class="role">Date:<c:out value="${ post.createdDateString }"/></strong>
+								<blockquote>
+									&ldquo;<c:out escapeXml="fales" value="${ post.text }"/>&rdquo;
+								</blockquote>
+								<h4><i class="icon-user"></i><c:out value="${ post.userName }"/></h4>
 							</div>
-							<form action="deleteComment" method="post">
-								<input type="hidden" name="id" value="<c:out value="${ comment.id }"/>">
+							<!-- 編集ボタン -->
+							<form action="editPost" method="post">
+								<input type="hidden" name="id" value="<c:out value="${ post.id }"/>">
 								<div class="form-group">
-									<input type="submit" value="this comment delete" class="btn btn-primary">
+									<input type="submit" value="do edit" class="btn btn-primary">
 								</div>
 							</form>
-						</c:forEach>
-						<div id="commentForm">
-							<form:form modelAttribute="addComment" action="${pageContext.request.contextPath}/addComment">
-								<form:textarea path="text" cols="50" rows="10"/>
-								<form:hidden path="postId" value="${ post.id }"/>
+							<!-- 削除ボタン -->
+							<form action="deletePost" method="post">
+								<input type="hidden" name="id" value="<c:out value="${ post.id }"/>">
 								<div class="form-group">
-									<input type="submit" value="do commnet" class="btn btn-primary">
+									<input type="submit" value="this post delete" class="btn btn-primary">
 								</div>
-							</form:form>
-							<c:if test="${ isErrorPost == post.id }">
-								<c:forEach items="${ violationMessages['_text'] }" var="message">
-									<div class="error"><c:out value="${ message }"/></div>
+							</form>
+						</div>
+						<div class="col-md-6 animate-box" data-animate-effect="fadeInRight">
+							<div class="mt">
+								<h2>Comment</h2>
+								<c:forEach items="${ post.comments }" var="comment">
+									<strong class="role">Date:<c:out value="${ comment.createdDateString }"/></strong>
+									<blockquote>
+										&ldquo;<c:out escapeXml="fales" value="${ comment.text }"/>&rdquo;
+									</blockquote>
+									<h4><i class="icon-user"></i><c:out value="${ comment.userName }"/></h4>
+									<form action="deleteComment" method="post">
+										<input type="hidden" name="id" value="<c:out value="${ comment.id }"/>">
+										<div class="form-group">
+											<input type="submit" value="this comment delete" class="btn btn-primary">
+										</div>
+									</form>
 								</c:forEach>
-							</c:if>
+								<c:if test="${ post.comments.isEmpty() }">
+									<blockquote>
+										&ldquo;No commented&rdquo;
+									</blockquote>
+								</c:if>
+							</div>
+							<div id="commentForm">
+								<form:form modelAttribute="addComment" action="${pageContext.request.contextPath}/addComment">
+									<form:textarea path="text" cols="70" rows="5"/>
+									<form:hidden path="postId" value="${ post.id }"/>
+									<div class="form-group">
+										<input type="submit" value="do commnet" class="btn btn-primary">
+									</div>
+								</form:form>
+								<c:if test="${ isErrorPost == post.id }">
+									<c:forEach items="${ violationMessages['_text'] }" var="message">
+										<div class="error"><c:out value="${ message }"/></div>
+									</c:forEach>
+								</c:if>
+							</div>
 						</div>
 					</div>
-					<form action="editPost" method="post">
-						<input type="hidden" name="id" value="<c:out value="${ post.id }"/>">
-						<div class="form-group">
-							<input type="submit" value="do edit" class="btn btn-primary">
-						</div>
-					</form>
-					<form action="deletePost" method="post">
-						<input type="hidden" name="id" value="<c:out value="${ post.id }"/>">
-						<div class="form-group">
-							<input type="submit" value="this post delete" class="btn btn-primary">
-						</div>
-					</form>
 				</div>
+
 			</div>
-			</c:forEach>
 		</div>
+</c:forEach>
 	</div>
 	<div class="gototop js-top">
 		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
