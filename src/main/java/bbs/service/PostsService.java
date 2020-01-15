@@ -2,6 +2,8 @@ package bbs.service;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,40 +18,30 @@ import bbs.mapper.PostsMapper;
 @Service
 public class PostsService {
 
+	private Logger log = LogManager.getLogger(PostsService.class);
+
     @Autowired
     private PostsMapper postsMapper;
-
-    public List<Posts> getAll() {
-        return postsMapper.getAll();
-    }
 
     public List<Posts> getPosts(SearchPostsForm form){
     	String category = form.getCategory();
     	String toDate = form.getToDate();
     	String fromDate = form.getFromDate();
-
-    	if(!category.isEmpty()){
-    		return postsMapper.getPostsByCategory(category);
-    	}else if(!toDate.isEmpty() && !fromDate.isEmpty()){
-    		return postsMapper.getPostsByBetweenDate(toDate,fromDate);
-    	}else if(!toDate.isEmpty()){
-    		return postsMapper.getPostsByToDate(toDate);
-    	}else if(!fromDate.isEmpty()){
-    		return postsMapper.getPostsByFromDate(fromDate);
-    	}
-
-    	return getAll();
+    	return postsMapper.getPostList(category, toDate, fromDate);
     }
 
     public List<String> getCategories() {
-    	return postsMapper.getCategories();
+		List<String> cat = postsMapper.getCategories();
+		cat.add(0, "");
+    	return cat;
     }
 
     public void addPost(Users loginUser,PostForm form) {
     	PostsDto post = new PostsDto();
     	BeanUtils.copyProperties(form, post);
     	post.setUserId(loginUser.getId());
-    	postsMapper.addPost(post);
+		postsMapper.addPost(post);
+		log.debug(post.getText());
     }
 
     public void deletePost(Users loginUser,PostForm form) {

@@ -7,13 +7,8 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Re:Cypher's Bad Site</title>
-	<script type="text/javascript" src="<c:url value="/resources/js/jkl-calendar.js"/>" charset="Shift_JIS"></script>
 	<link rel="stylesheet" type="text/css" href="resources\css\style.css">
-	<script>
-    function getSelect(text) {
-    	document.getElementById('selectedCategory').value = text;
-    }
-	</script>
+
 	<!-- Animate.css -->
 	<link rel="stylesheet" href="resources/css/animate.css">
 	<!-- Icomoon Icon Fonts-->
@@ -29,10 +24,6 @@
 
 	<!-- Modernizr JS -->
 	<script src="resources/js/modernizr-2.6.2.min.js"></script>
-	<!-- FOR IE9 below -->
-	<!--[if lt IE 9]>
-	<script src="resources/js/respond.min.js"></script>
-	<![endif]-->
 	</head>
 	<body>
 		
@@ -43,15 +34,15 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-xs-2">
-						<a><i class="icon-user"></i><c:out value="${ sessionScope.loginUser.name }"/></a>
+						<a><i class="icon-user"></i>${ sessionScope.loginUser.name }</a>
 					</div>
 					<div class="col-xs-10 text-right menu-1">
 						<ul>
 							<li><a href="home">Home</a></li>
 							<li><a href="newPost">New Post</a></li>
-							<li class="active"><a href="injection">Injection Test</a></li>
+							<li><a href="injection">Injection Test</a></li>
 							<c:if test="${ sessionScope.loginUser.id == 1 && sessionScope.loginUser.id == 2}" >
-							<li><a href="manage">User Manage</a></li>
+							<li class="active"><a href="manage">User Manage</a></li>
 							</c:if>
 							<li><a href="logout">Logout</a></li>
 						</ul>
@@ -73,51 +64,86 @@
 				</div>
 			</div>
 		</header>
-		<div class="error">
-			<c:if test="${ not empty errorMessages }">
-				<c:forEach items="${ errorMessages }" var="message">
-					<c:out value="${ message }"/>
-				</c:forEach>
-				<c:remove var="errorMessages" scope="session"/>
-			</c:if>
+		<div class="fh5co-section">
+			<div class="container">
+				<div class="row">
+					<div class="project">
+						<div class="mt">
+							<div class="col-md-12 animate-box">
+								<form:form modelAttribute="searchUsers" action="manage"  method="POST">
+									<div class="col-md-2">
+										<form:input path="name" class="form-control"/>
+									</div>
+									<div class="col-md-2">
+										<form:select path="branchName" items="${branches}" multiple="false" class="form-control"/>
+									</div>
+									<div class="col-md-2">
+										<form:select path="departmentName" items="${departments}" multiple="false" class="form-control"/>
+									</div>
+									<div class="col-md-1">
+										<input type="submit" value="Serch" class="btn btn-primary">
+									</div>
+								</form:form>
+								<form:form action="manage" method="GET">
+									<div class="col-md-1">
+										<input type="submit" value="View All" class="btn btn-primary">
+									</div>
+								</form:form>
+							</div>
+						</div>
+						<div class="mt">
+							<div class="col-md-12 animate-box">
+								<h3>Filter:
+								<c:if test="${ !termBName.isEmpty() && termBName != null }"> Branch-[${ termBName }] </c:if>
+								<c:if test="${ !termDName.isEmpty() && termDName != null  }"> Department-[${ termDName }] </c:if>
+								<c:if test="${ !termName.isEmpty() && termName != null  }"> User Name-[${ termName }] </c:if>
+								</h3>
+								<h3>
+								Views: <span id="fh5co-counter" class="counter js-counter" data-from="0" data-to="${ users.size() }" data-speed="2500" data-refresh-interval="50">${ users.size() }</span>
+								</h3>
+							</div>
+						</div>	
+					</div>
+				</div>
+			</div>
 		</div>
+<c:forEach items="${ users }" var="user" varStatus="status">
 		<div class="fh5co-section">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12 animate-box" data-animate-effect="fadeIn">
-						<div class="col-md-12 animate-box" data-animate-effect="fadeInUp">
-							<h2>Injection Test</h2>
-							<!-- OSコマンドインジェクション -->	
-							<form action="osInjection" method="post">
+						<div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
+							<div class="testimony">
+								<h3><i class="icon-user"></i>${ user.name }</h3>
+								<strong class="role">Branch:<c:out value="${ user.branchName }"/></strong>
+								<br>
+								<strong class="role">Department:<c:out value="${ user.departmentName }"/></strong>
+							</div>
+							<c:if test="${ sessionScope.loginUser.id == 1}" >
+							<!-- 編集ボタン -->
+							<form action="editUser" method="post">
+								<input type="hidden" name="id" value="${ user.id }">
 								<div class="form-group">
-									<label>OS Command Injection</label>
-										<textarea class="form-control" rows="5" cols="80" name="osInjection"></textarea>
-								</div>
-								<!-- 登録ボタン -->
-								<div class="form-group">
-									<input type="submit" value="Submit" class="btn btn-primary">
-								</div>
-							</form>
-							<!-- パストラバーサル -->	
-							<form action="pathTraversal" method="post">
-								<div class="form-group">
-									<label>OS Command Injection</label>
-										<input type="hidden" name="pathTraversal" value="/var/lib/tomcat/webapps/vaddyTest/resources/css/style.css" />
-								</div>
-								<!-- CSS読み込み -->
-								<div class="form-group">
-									<input type="submit" value="Load CSS" class="btn btn-primary">
+									<input type="submit" value="do edit" class="btn btn-primary">
 								</div>
 							</form>
-
-							<!-- 実行結果 -->
-							<label>Result</label>
-							<pre><c:out value="${ injection.result }"/></pre>
+							<!-- 削除ボタン -->
+							<form action="deleteUser" method="post">
+								<input type="hidden" name="id" value="${ user.id }">
+								<div class="form-group">
+									<input type="submit" value="this user delete" class="btn btn-primary">
+								</div>
+							</form>
+							</c:if>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+</c:forEach>
+	</div>
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
 	</div>
 	
 	<!-- jQuery -->

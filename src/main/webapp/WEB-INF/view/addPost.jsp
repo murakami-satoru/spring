@@ -6,7 +6,7 @@
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>掲示板システム</title>
+	<title>Re:Cypher's Bad Site</title>
 	<script type="text/javascript" src="<c:url value="/resources/js/jkl-calendar.js"/>" charset="Shift_JIS"></script>
 	<link rel="stylesheet" type="text/css" href="resources\css\style.css">
 	<script>
@@ -48,8 +48,11 @@
 					<div class="col-xs-10 text-right menu-1">
 						<ul>
 							<li><a href="home">Home</a></li>
-							<li class="active"><a href="${pageContext.request.contextPath}/newPost">New Post</a></li>
-							<li><a href="${pageContext.request.contextPath}/injection">injection Test</a></li>
+							<li class="active"><a href="newPost">New Post</a></li>
+							<li><a href="injection">Injection Test</a></li>
+							<c:if test="${ sessionScope.loginUser.id == 1 && sessionScope.loginUser.id == 2}" >
+							<li><a href="manage">User Manage</a></li>
+							</c:if>
 							<li><a href="logout">Logout</a></li>
 						</ul>
 					</div>
@@ -84,7 +87,7 @@
 					<div class="col-md-12 animate-box" data-animate-effect="fadeIn">
 						<div class="col-md-12 animate-box" data-animate-effect="fadeInUp">
 							<h2>New Post</h2>
-							<form:form modelAttribute="post" action="${pageContext.request.contextPath}/${action_post}">
+							<form:form modelAttribute="post" action="${action_post}">
 								<div class="form-group">
 									<!-- 件名 -->
 									<label>Title</label>

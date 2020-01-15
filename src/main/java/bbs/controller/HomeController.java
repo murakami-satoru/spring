@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpSession;
 
@@ -19,19 +21,23 @@ import bbs.service.PostsService;
 @Controller
 public class HomeController {
 
+    private Logger log = LogManager.getLogger(HomeController.class);
+
     @Autowired
     private PostsService postsService;
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String displayHome(Model model) {
-		model.addAttribute("posts", postsService.getAll());
+		model.addAttribute("posts", postsService.getPosts(new SearchPostsForm()));
 		commonHome(model);
+        model.addAttribute("termCategory", "");
+        model.addAttribute("termFromDate", "");
+        model.addAttribute("termToDate", "");
 		return "home";
     }
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logout(HttpSession session) {
-        session.invalidate();
+	public String logout() {
 		return "redirect:/login";
     }
 
@@ -43,7 +49,10 @@ public class HomeController {
     @RequestMapping(value = "/searchPosts", method = RequestMethod.POST)
     public String searchPosts(@ModelAttribute SearchPostsForm form,Model model) {
     	model.addAttribute("posts", postsService.getPosts(form));
-		commonHome(model);
+        commonHome(model);
+        model.addAttribute("termCategory", form.getCategory());
+        model.addAttribute("termFromDate", form.getFromDate());
+        model.addAttribute("termToDate", form.getToDate());
         return "home";
     }
 

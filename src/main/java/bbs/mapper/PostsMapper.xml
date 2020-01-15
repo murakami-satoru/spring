@@ -35,7 +35,7 @@
         <result column="user_id" property="userId" />
         <result column="user_name" property="userName" />
     </resultMap>
-    <select id="getAll" resultMap="postsResult">
+    <select id="getPostList" resultMap="postsResult" parameterType="String">
 		select
 		 p.id
 		,p.title
@@ -57,113 +57,25 @@
 		,c.created_date as comment_created_date
 		,c.updated_date as comment_updated_date
 		from view_posts p left join view_comments c on p.id = c.post_id
+		<where>
+			<if test="category != '' and category != null">
+				p.category = #{category}
+			</if>
+			<if test="(toDate != null and toDate != '') and (fromDate != null and fromDate != '')">
+				AND p.updated_date between #{toDate} and #{fromDate}
+			</if>
+			<if test="toDate != null and toDate != ''">
+				<![CDATA[
+				AND p.updated_date <= #{toDate}
+				]]>
+			</if>
+			<if test="fromDate != null and fromDate != ''">
+				<![CDATA[
+				AND p.updated_date >= #{fromDate}
+				]]>
+			</if>
+		</where>
 		order by id desc ,comment_id asc;
-    </select>
-	<select id="getPostsByCategory" resultMap="postsResult" parameterType="String">
-		select
-		 p.id
-		,p.title
-		,p.text
-		,p.category
-		,p.branch_id
-		,p.department_id
-		,p.user_id
-		,p.user_name
-		,p.created_date
-		,p.updated_date
-		,c.id as comment_id
-		,c.text as comment_text
-		,c.post_id
-		,c.branch_id as comment_branch_id
-		,c.department_id as comment_department_id
-		,c.user_id as comment_user_id
-		,c.user_name as comment_user_name
-		,c.created_date as comment_created_date
-		,c.updated_date as comment_updated_date
-		from view_posts p left join view_comments c on p.id = c.post_id
-		where p.category = #{category}
-		order by id desc ,comment_id asc;
-    </select>
-	<select id="getPostsByToDate" resultMap="postsResult" parameterType="String">
-	<![CDATA[
-		select
-		 p.id
-		,p.title
-		,p.text
-		,p.category
-		,p.branch_id
-		,p.department_id
-		,p.user_id
-		,p.user_name
-		,p.created_date
-		,p.updated_date
-		,c.id as comment_id
-		,c.text as comment_text
-		,c.post_id
-		,c.branch_id as comment_branch_id
-		,c.department_id as comment_department_id
-		,c.user_id as comment_user_id
-		,c.user_name as comment_user_name
-		,c.created_date as comment_created_date
-		,c.updated_date as comment_updated_date
-		from view_posts p left join view_comments c on p.id = c.post_id
-		where p.updated_date <= #{toDate}
-		order by id desc ,comment_id asc;
-	 ]]>
-    </select>
-	<select id="getPostsByFromDate" resultMap="postsResult" parameterType="String">
-	<![CDATA[
-		select
-		 p.id
-		,p.title
-		,p.text
-		,p.category
-		,p.branch_id
-		,p.department_id
-		,p.user_id
-		,p.user_name
-		,p.created_date
-		,p.updated_date
-		,c.id as comment_id
-		,c.text as comment_text
-		,c.post_id
-		,c.branch_id as comment_branch_id
-		,c.department_id as comment_department_id
-		,c.user_id as comment_user_id
-		,c.user_name as comment_user_name
-		,c.created_date as comment_created_date
-		,c.updated_date as comment_updated_date
-		from view_posts p left join view_comments c on p.id = c.post_id
-		where p.updated_date >= #{fromDate}
-		order by id desc ,comment_id asc;
-	 ]]>
-    </select>
-	<select id="getPostsByBetweenDate" resultMap="postsResult" parameterType="String">
-	<![CDATA[
-		select
-		 p.id
-		,p.title
-		,p.text
-		,p.category
-		,p.branch_id
-		,p.department_id
-		,p.user_id
-		,p.user_name
-		,p.created_date
-		,p.updated_date
-		,c.id as comment_id
-		,c.text as comment_text
-		,c.post_id
-		,c.branch_id as comment_branch_id
-		,c.department_id as comment_department_id
-		,c.user_id as comment_user_id
-		,c.user_name as comment_user_name
-		,c.created_date as comment_created_date
-		,c.updated_date as comment_updated_date
-		from view_posts p left join view_comments c on p.id = c.post_id
-		where p.updated_date between #{toDate} and #{fromDate}
-		order by id desc ,comment_id asc;
-	 ]]>
     </select>
     <resultMap id="categoriesResults" type="String">
         <result column="category" property="categories" />

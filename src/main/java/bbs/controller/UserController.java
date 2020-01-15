@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import bbs.entity.Users;
 import bbs.form.LoginForm;
+import bbs.form.SearchUsersForm;
 import bbs.service.UsersService;
 
 @Controller
@@ -52,14 +53,35 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String toLogin(Model model) {
+    public String toLogin(Model model ,HttpSession session) {
+        session.invalidate();
     	model.addAttribute("login", new LoginForm());
-    	model.addAttribute("title", "ログイン画面");
         return "login";
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model) {
     	return "redirect:/login";
+    }
+
+    @RequestMapping(value = "/manage", method = RequestMethod.GET)
+    public String toUserMange(Model model) {
+		model.addAttribute("searchUsers",new SearchUsersForm());
+        model.addAttribute("users", userService.getUsers(new SearchUsersForm()));
+        model.addAttribute("departments", userService.getDepartments());
+        model.addAttribute("branches", userService.getBranches());
+        return "manage";
+    }
+
+    @RequestMapping(value = "/manage", method = RequestMethod.POST)
+    public String searchUserMange(Model model, SearchUsersForm form) {
+		model.addAttribute("searchUsers",form);
+        model.addAttribute("users", userService.getUsers(form));
+        model.addAttribute("departments", userService.getDepartments());
+        model.addAttribute("branches", userService.getBranches());
+        model.addAttribute("termBName", form.getBranchName());
+        model.addAttribute("termDName", form.getDepartmentName());
+        model.addAttribute("termName", form.getName());
+        return "manage";
     }
 }
