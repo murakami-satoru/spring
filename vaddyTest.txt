@@ -1,20 +1,20 @@
-¡EC2ƒƒOƒCƒ“
-ssh -i demo.pem ec2-user@ec2-3-133-83-190.us-east-2.compute.amazonaws.com
-¡ƒtƒ@ƒCƒ‹“]‘—
-sftp -i demo.pem ec2-user@ec2-3-133-83-190.us-east-2.compute.amazonaws.com
+ï¿½ï¿½EC2ï¿½ï¿½ï¿½Oï¿½Cï¿½ï¿½
+ssh -i demo.pem ec2-user@ec2-13-58-251-229.us-east-2.compute.amazonaws.com
+ï¿½ï¿½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½]ï¿½ï¿½
+sftp -i demo.pem ec2-user@ec2-13-58-251-229.us-east-2.compute.amazonaws.com
  
-¡ƒ\[ƒX”z’u
+ï¿½ï¿½ï¿½\ï¿½[ï¿½Xï¿½zï¿½u
 sudo mv vaddyTest.war /usr/share/tomcat/webapps/
 
-¡Tocató‘ÔŠm”F
+ï¿½ï¿½Tocatï¿½ï¿½ÔŠmï¿½F
 sudo /bin/systemctl status tomcat
-¦sudo /bin/systemctl status|stop|start xxx
+ï¿½ï¿½sudo /bin/systemctl status|stop|start xxx
 
-¡TomcatƒƒOŠm”F
+ï¿½ï¿½Tomcatï¿½ï¿½ï¿½Oï¿½mï¿½F
 tail -f /usr/share/tomcat/logs/catalina.2019-12-03.log
 
-¡ƒƒOƒCƒ“‚ÌSQLi
+ï¿½ï¿½ï¿½ï¿½ï¿½Oï¿½Cï¿½ï¿½ï¿½ï¿½SQLi
 ' OR login_id = 'admin
 
-¡“Še‚ÌXSS
+ï¿½ï¿½ï¿½ï¿½ï¿½eï¿½ï¿½XSS
 <script>alert(1)</script>

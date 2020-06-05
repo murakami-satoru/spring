@@ -41,7 +41,7 @@
 							<li><a href="home">Home</a></li>
 							<li><a href="newPost">New Post</a></li>
 							<li><a href="injection">Injection Test</a></li>
-							<c:if test="${ sessionScope.loginUser.id == 1 && sessionScope.loginUser.id == 2}" >
+							<c:if test="${ sessionScope.loginUser.id == 1 || sessionScope.loginUser.id == 2}" >
 							<li class="active"><a href="manage">User Manage</a></li>
 							</c:if>
 							<li><a href="logout">Logout</a></li>
@@ -75,10 +75,20 @@
 										<form:input path="name" class="form-control"/>
 									</div>
 									<div class="col-md-2">
-										<form:select path="branchName" items="${branches}" multiple="false" class="form-control"/>
+										<select name="branchName" class="form-control">
+											<option value=""></option>
+											<c:forEach items="${ branches }" var="branch" varStatus="status">
+											<option value="${branch.name}">${branch.name}</option>
+											</c:forEach>
+										</select>
 									</div>
 									<div class="col-md-2">
-										<form:select path="departmentName" items="${departments}" multiple="false" class="form-control"/>
+										<select name="departmentName" class="form-control">
+											<option value=""></option>
+											<c:forEach items="${ departments }" var="department" varStatus="status">
+											<option value="${department.name}">${department.name}</option>
+											</c:forEach>
+										</select>
 									</div>
 									<div class="col-md-1">
 										<input type="submit" value="Serch" class="btn btn-primary">
@@ -101,6 +111,7 @@
 								<h3>
 								Views: <span id="fh5co-counter" class="counter js-counter" data-from="0" data-to="${ users.size() }" data-speed="2500" data-refresh-interval="50">${ users.size() }</span>
 								</h3>
+								<a href="newUser" class="btn btn-primary">Create User</a>
 							</div>
 						</div>	
 					</div>

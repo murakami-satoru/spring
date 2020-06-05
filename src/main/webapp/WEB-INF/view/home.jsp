@@ -72,7 +72,7 @@
 							<li class="active"><a href="home">Home</a></li>
 							<li><a href="newPost">New Post</a></li>
 							<li><a href="injection">Injection Test</a></li>
-							<c:if test="${ sessionScope.loginUser.id == 1 && sessionScope.loginUser.id == 2}" >
+							<c:if test="${ sessionScope.loginUser.id == 1 || sessionScope.loginUser.id == 2}" >
 							<li><a href="manage">User Manage</a></li>
 							</c:if>
 							<li><a href="logout">Logout</a></li>
@@ -196,9 +196,9 @@
 									</blockquote>
 								</c:if>
 							</div>
-							<form:form modelAttribute="addComment" action="addComment">
-								<form:textarea path="text" cols="70" rows="5"/>
-								<form:hidden path="postId" value="${ post.id }"/>
+							<form:form modelAttribute="addComment" action="addComment" id="">
+								<form:textarea path="text" cols="70" rows="5" id=""/>
+								<form:hidden path="postId" value="${ post.id }" id=""/>
 								<div class="form-group">
 									<input type="submit" value="do commnet" class="btn btn-primary">
 								</div>

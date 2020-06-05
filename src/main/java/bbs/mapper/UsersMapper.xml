@@ -22,63 +22,50 @@
 		AND password = '${password}';
     </select>
 
-    <resultMap id="usersResult" type="bbs.entity.Users">
-      <id column="user_id" property="id" />
-      <result column="user_name" property="name" />
-      <result column="loginId" property="loginId" />
-      <result column="password" property="password" />
-      <result column="branch_name" property="branchName" />
-      <result column="department_name" property="departmentName" />
-      <result column="is_locked" property="isLocked" />
-      <result column="created_date" property="createdDate" />
-      <result column="updated_date" property="updatedDate" />
-  </resultMap>
-  <select id="getUsers" resultMap="usersResult" parameterType="String">
+    <select id="getUsers" resultMap="loginResult" parameterType="String">
 		SELECT
       *
     FROM view_users
-		<where>
-			<if test="id != '' and id != null">
-				user_id LIKE #{id}
-			</if>
-			<if test="name != null and name != '' ">
-				AND user_name LIKE %#{name}%
-			</if>
-			<if test="branchName != null and branchName != '' ">
-				AND branch_name LIKE #{branchName}
-			</if>
-			<if test="departmentName != null and departmentName != '' ">
-				AND department_name LIKE #{departmentName}
-			</if>
-		</where>
+      <where>
+        <if test="id != '' and id != null">
+          user_id LIKE #{id}
+        </if>
+        <if test="name != null and name != '' ">
+          AND user_name LIKE %#{name}%
+        </if>
+        <if test="branchName != null and branchName != '' ">
+          AND branch_name LIKE #{branchName}
+        </if>
+        <if test="departmentName != null and departmentName != '' ">
+          AND department_name LIKE #{departmentName}
+        </if>
+      </where>
 		order by user_id;
     </select>
-    <resultMap id="departmentsResults" type="String">
-      <result column="name" property="departments" />
-    </resultMap>
-    <select id="getDepartments" resultMap="departmentsResults">
-    SELECT DISTINCT name FROM departments ORDER BY id
+    <select id="getDepartments" resultType="hashmap">
+    SELECT id,name FROM departments ORDER BY id
     </select>
-    <resultMap id="branchesResults" type="String">
-      <result column="name" property="branches" />
-    </resultMap>
-    <select id="getBranches" resultMap="branchesResults">
-    SELECT DISTINCT name FROM branches ORDER BY id
+    <select id="getBranches" resultType="hashmap">
+    SELECT id,name name FROM branches ORDER BY id
     </select>
     
     <insert id="addUser" parameterType="bbs.dto.UsersDto">
       INSERT INTO users(
-        title
-      ,text
-      ,category
-      ,user_id
+        login_id
+      ,password
+      ,name
+      ,branch_id
+      ,department_id
+      ,is_locked
       ,created_date
       ,updated_date
       ) VALUES (
-        #{title}
-      ,#{text}
-      ,#{category}
-      ,#{userId}
+        #{loginId}
+      ,#{password}
+      ,#{name}
+      ,#{branchId}
+      ,#{departmentId}
+      ,#{isLocked}
       ,CURRENT_TIMESTAMP
       ,CURRENT_TIMESTAMP
       )
@@ -90,9 +77,11 @@
     <update id="editUser" parameterType="bbs.dto.UsersDto">
       UPDATE users 
       SET 
-        title = #{title}
-        ,text = #{text}
-        ,category = #{category}
+        name = #{name}
+        ,password = #{password}
+        ,branch_id = #{branchId}
+        ,department_id = #{departmentId}
+        ,is_locked = #{isLocked}
         ,updated_date = CURRENT_TIMESTAMP
       WHERE id = #{id}
     </update>

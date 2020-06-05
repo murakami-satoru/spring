@@ -10,8 +10,11 @@
 	<script type="text/javascript" src="<c:url value="/resources/js/jkl-calendar.js"/>" charset="Shift_JIS"></script>
 	<link rel="stylesheet" type="text/css" href="resources\css\style.css">
 	<script>
-    function getSelect(text) {
-    	document.getElementById('selectedCategory').value = text;
+    function setName(col,selected) {
+		var idx = selected.selectedIndex;
+		var name = selected.options[idx].text;
+		var obj = document.getElementById(col);
+    	obj.value = name;
     }
 	</script>
 	<!-- Animate.css -->
@@ -48,10 +51,10 @@
 					<div class="col-xs-10 text-right menu-1">
 						<ul>
 							<li><a href="home">Home</a></li>
-							<li class="active"><a href="newPost">New Post</a></li>
+							<li><a href="newPost">New Post</a></li>
 							<li><a href="injection">Injection Test</a></li>
 							<c:if test="${ sessionScope.loginUser.id == 1 || sessionScope.loginUser.id == 2}" >
-							<li><a href="manage">User Manage</a></li>
+							<li class="active"><a href="manage">User Manage</a></li>
 							</c:if>
 							<li><a href="logout">Logout</a></li>
 						</ul>
@@ -86,36 +89,70 @@
 				<div class="row">
 					<div class="col-md-12 animate-box" data-animate-effect="fadeIn">
 						<div class="col-md-12 animate-box" data-animate-effect="fadeInUp">
-							<h2>New Post</h2>
-							<form:form modelAttribute="post" action="${action_post}">
+							<h2>User Info</h2>
+							<form:form modelAttribute="user" action="${action_user}">
 								<div class="form-group">
-									<!-- 件名 -->
-									<label>Title</label>
-									<form:input path="title" class="form-control" size="40" maxlength="50" readonly="${is_readonly}"/>
-									<c:forEach items="${ violationMessages['_title'] }" var="message">
+									<!-- 名前 -->
+									<label>Name</label>
+									<form:input path="name" class="form-control" size="40" maxlength="50" readonly="${is_readonly}"/>
+									<c:forEach items="${ violationMessages['_name'] }" var="message">
 										<div class="error"><c:out value="${ message }"/></div>
 									</c:forEach>
-									
-									<!-- 投稿内容 -->
-									<label>Text</label>
-									<form:textarea path="text" class="form-control" cols="50" rows="5" readonly="${is_readonly}"/>
-									<c:forEach items="${ violationMessages['_text'] }" var="message">
-										<div class="error"><c:out value="${ message }"/></div>
-									</c:forEach>
-									
-									<!-- カテゴリー -->
-									<label>Category</label>
-									<form:input path="category" class="form-control" id="selectedCategory" size="12" maxlength="10" readonly="${is_readonly}"/>
-									<c:forEach items="${ violationMessages['_category'] }" var="message">
-										<div class="error"><c:out value="${ message }"/></div>
-									</c:forEach>
-									
-									<c:if test="${!is_readonly}">
-									<!-- カテゴリー一覧 -->
-									<label>Category List</label>
-									<form:select path="categories" class="form-control" items="${categories}" onChange="getSelect(this.value)" multiple="false"/>
-									</c:if>
 
+									<!-- ログインID -->
+									<label>Login ID</label>
+									<form:input path="loginId" class="form-control" size="40" maxlength="50" readonly="${is_readonly}"/>
+									<c:forEach items="${ violationMessages['_loginId'] }" var="message">
+										<div class="error"><c:out value="${ message }"/></div>
+									</c:forEach>
+									
+									<!-- パスワード -->
+									<label>Password</label>
+									<form:input path="password" class="form-control" size="40" maxlength="32" readonly="${is_readonly}"/>
+									<c:forEach items="${ violationMessages['_password'] }" var="message">
+										<div class="error"><c:out value="${ message }"/></div>
+									</c:forEach>
+									
+									<c:choose>
+										<c:when test="${!is_readonly}">
+									<!-- 支店 -->
+									<label>Branch</label>
+									<select name="branchId" class="form-control" onChange="setName('branchName',this)">
+										<c:if test="${user.branchId == 0}">
+										<option value="" selected></option>
+										</c:if>
+										<c:forEach items="${ branches }" var="branch" varStatus="status">
+										<option value="${branch.id}" ${branch.id == user.branchId ? "selected" : null} >${branch.name}</option>
+										</c:forEach>
+									</select>
+									
+									<!-- 役職 -->
+									<label>Department</label>
+									<select name="departmentId" class="form-control" onChange="setName('departmentName',this)">
+										<c:if test="${user.departmentId == 0}">
+										<option value="" selected></option>
+										</c:if>
+										<c:forEach items="${ departments }" var="department" varStatus="status">
+										<option value="${department.id}" ${department.id==user.departmentId ? "selected" : null} >${department.name}</option>
+										</c:forEach>
+									</select>
+									<input type="hidden" id="branchName" name="branchName" value=""/>
+									<input type="hidden" id="departmentName" name="departmentName" value=""/>
+										</c:when>
+
+										<c:when test="${is_readonly}">
+									<!-- 支店 -->
+									<label>Branch</label>
+									<form:input path="branchName" class="form-control" size="40" maxlength="50" readonly="${is_readonly}"/>
+									<form:hidden path="branchId"/>
+									
+									<!-- 役職 -->
+									<label>Department</label>
+									<form:input path="departmentName" class="form-control" size="40" maxlength="50" readonly="${is_readonly}"/>
+									<form:hidden path="departmentId"/>
+										</c:when>
+									</c:choose>
+									
 									<form:hidden path="id"/>
 								</div>
 
