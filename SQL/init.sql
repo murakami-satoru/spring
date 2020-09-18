@@ -1,10 +1,4 @@
-CREATE DATABASE bbs DEFAULT CHARACTER SET utf8;
-/* ƒ†[ƒUì¬ */
-CREATE USER 'root'@'%' IDENTIFIED BY 'root';
-
-/* Œ ŒÀ•t—^ */
-GRANT ALL ON example_db.* TO 'root'@'%';
-
+use bbs;
 drop table if exists branches;
 create table branches(
 	id integer auto_increment primary key,
@@ -51,18 +45,18 @@ create table comments(
 	updated_date timestamp
 );
 
-insert into branches (name) values ('–{Ğ');
-insert into branches (name) values ('“Œ‹x“X');
-insert into branches (name) values ('‰«“êx“X');
-insert into branches (name) values ('–kŠC“¹x“X');
+insert into branches (name) values ('æœ¬ç¤¾');
+insert into branches (name) values ('æ±äº¬æ”¯åº—');
+insert into branches (name) values ('æ²–ç¸„æ”¯åº—');
+insert into branches (name) values ('åŒ—æµ·é“æ”¯åº—');
 
-insert into departments (name) values ('Œf¦”ÂŠÇ—');
-insert into departments (name) values ('î•ñŠÇ—');
-insert into departments (name) values ('‘–±l–');
-insert into departments (name) values ('x“X’·');
-insert into departments (name) values ('Ğˆõ');
+insert into departments (name) values ('æ²ç¤ºæ¿ç®¡ç†');
+insert into departments (name) values ('æƒ…å ±ç®¡ç†');
+insert into departments (name) values ('ç·å‹™äººäº‹');
+insert into departments (name) values ('æ”¯åº—é•·');
+insert into departments (name) values ('ç¤¾å“¡');
 
-insert into users (login_id,password,name,branch_id,department_id,created_date,updated_date) values ('admin','admin','Œf¦”ÂŠÇ—Ò',1,1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
-insert into users (login_id,password,name,branch_id,department_id,created_date,updated_date) values ('soumu','soumu','‘–±l–',1,3,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+insert into users (login_id,password,name,branch_id,department_id,created_date,updated_date) values ('admin','admin','æ²ç¤ºæ¿ç®¡ç†è€…',1,1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+insert into users (login_id,password,name,branch_id,department_id,created_date,updated_date) values ('soumu','soumu','ç·å‹™äººäº‹',1,3,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
 commit;

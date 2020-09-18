@@ -72,7 +72,7 @@
 							<li class="active"><a href="home">Home</a></li>
 							<li><a href="newPost">New Post</a></li>
 							<li><a href="injection">Injection Test</a></li>
-							<c:if test="${ sessionScope.loginUser.id == 1 || sessionScope.loginUser.id == 2}" >
+							<c:if test="${ sessionScope.loginUser.id == 1}" >
 							<li><a href="manage">User Manage</a></li>
 							</c:if>
 							<li><a href="logout">Logout</a></li>

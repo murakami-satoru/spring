@@ -1,3 +1,4 @@
+use bbs;
 drop view if exists view_posts;
 drop view if exists view_comments;
 drop view if exists count_post_by_branch;
